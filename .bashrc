@@ -23,11 +23,9 @@ WHITE='\033[1;37m'
 git --version
 # node -v
 # npm -v
-echo -e "${RED}Welcome user:$USERNAME"
+echo -e "\n${RED}Welcome user: $USERNAME"
 echo -e "${WHITE}Folder: $PWD"
 echo -e "Commands are set\n"
-
-parse_git_branch() { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' ; }
 
 my_versions() {
 
@@ -41,16 +39,14 @@ my_versions() {
   echo -e "${RED}--------------\n"
 }
 
+PS1=''$LIGHTBLUE'[\d \t] '$GREEN'[\u@\h] '$RED'[\w] '$YELLOW'$(__git_ps1 "(%s)")'$'\n'$RED' > '$WHITE''
 
-# PS1="$LIGHTBLUE[\d \t] $GREEN[\u@\h] $RED\w $YELLOW\$(parse_git_branch) >"
-
-
-# export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
-
-
-alias l='ls -lah'
-alias dev='cd c:/dev'
-alias setproxy='HTTP_PROXY=; HTTPS_PROXY=; echo Proxy changed'
-alias proxy=' echo Scania proxy set for HTTP_PROXY:$HTTP_PROXY and HTTPS_PROXY:$HTTPS_PROXY'
-alias versions="my_versions"
-
+alias l='ls -lah --color=auto; pwd' #List everything with color
+alias dev='cd c:/Development/; l; echo -e $YELLOW Development folder' #Change to your development folder
+alias setproxy='HTTP_PROXY=; HTTPS_PROXY=; echo Proxy changed; proxy'
+alias proxy='echo -e Scania proxy set for $PURPLE HTTP_PROXY:$HTTP_PROXY and $PURPLE HTTPS_PROXY:$HTTPS_PROXY'
+alias versions="my_versions" # List versions if different programs,packages and much more
+alias buildbash='source $HOME/.bashrc' #Build your new promt
+alias home='cd $HOME; echo Home directory $HOME' # Home directory
+alias fp='echo fetching repo...;git fetch --prune;echo pulling repo...; git pull';
+alias c=' clear;Echo -e $RED cleared console....;'
