@@ -1,5 +1,7 @@
 #!bin/bash
-
+export PATH="$PATH:$HOME/.npm/bin"
+# https://medium.com/@Mandysidana/using-npm-install-without-sudo-2de6f8a9e1a3
+# Fix for NPM link problem
 # Work in progress
 
 #Colors variables
@@ -26,6 +28,19 @@ git --version
 echo -e "\n${RED}Welcome user: $USERNAME"
 echo -e "${WHITE}Folder: $PWD"
 echo -e "Commands are set\n"
+echo -e "${YELLOW}ZSH v$ZSH_VERSION"
+
+# PS1=''$LIGHTBLUE'[\d \t] '$GREEN'[\u@\h] '$RED'[\w] '$YELLOW'$(__git_ps1 "(%s)")'$'\n'$RED' > '$WHITE''
+
+PROMPT='%F{green}[%*]%f %n %B%F{red}%1~%f%b '\$vcs_info_msg_0_'
+> ';
+RPROMPT=''
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git*' formats "%F{blue}[repo: %r]%f %F{yellow}%b (%a) %m%u%c %f "
+autoload -Uz compinit && compinit
 
 my_versions() {
 
@@ -39,14 +54,13 @@ my_versions() {
   echo -e "${RED}--------------\n"
 }
 
-PS1=''$LIGHTBLUE'[\d \t] '$GREEN'[\u@\h] '$RED'[\w] '$YELLOW'$(__git_ps1 "(%s)")'$'\n'$RED' > '$WHITE''
-
-alias l='ls -lah --color=auto; pwd' #List everything with color
-alias dev='cd c:/Development/; l; echo -e $YELLOW Development folder' #Change to your development folder
-alias setproxy='HTTP_PROXY=; HTTPS_PROXY=; echo Proxy changed; proxy'
-alias proxy='echo -e Scania proxy set for $PURPLE HTTP_PROXY:$HTTP_PROXY and $PURPLE HTTPS_PROXY:$HTTPS_PROXY'
+alias l='ls -lah; pwd' #List everything with color
+alias dev='cd /Users/mmexvr/Documents/dev; pwd; echo -e $YELLOW Development folder' #Change to your development folder
+alias setp='HTTP_PROXY=; HTTPS_PROXY=; echo Proxy changed; proxy'
+alias unsetp='HTTP_PROXY=; HTTPS_PROXY=; echo Proxy changed; proxy'
+alias proxy='echo -e proxy set for $PURPLE HTTP_PROXY:$HTTP_PROXY and $PURPLE HTTPS_PROXY:$HTTPS_PROXY'
 alias versions="my_versions" # List versions if different programs,packages and much more
-alias buildbash='source $HOME/.bashrc' #Build your new promt
+alias buildz='source $HOME/.zshrc' #Build your new promt
 alias home='cd $HOME; echo Home directory $HOME' # Home directory
 alias fp='echo fetching repo...;git fetch --prune;echo pulling repo...; git pull';
-alias c=' clear;Echo -e $RED cleared console....;'
+alias c=' clear;Echo cleared console....;'
